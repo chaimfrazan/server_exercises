@@ -14,16 +14,23 @@ app.get("/products", async (req, res) => {
   }
 });
 
+app.get("/products/:id", async (req, res) => {
+  try {
+    const data = await readProducts();
+    res.status(200).json({ status: "sucsses", data: data });
+  } catch (error) {
+    res.status(500).json({ status: "server error" });
+  }
+});
+
 app.post("/products", async (req, res) => {
   try {
     const data = await readProducts();
-    const { body } = req;
-    if (data[data.length - 1].id <= body.id) {
-      res.status(404).json({ status: "id out of range" });
-    }
-    data.push(body);
-    writeProducts(data);
-    res.status(200).json({ status: "sucssefoly", data: filterData });
+      const { body } = req;
+      const nextIndex = data[data.length -1].id + 1
+      data.push({id: nextIndex, ... body });
+    await writeProducts(data);
+    res.status(200).json({ status: "sucssefoly", data: data });
   } catch (error) {
     res.status(500).json({ status: "server error" });
   }
@@ -50,7 +57,6 @@ app.put("/products/:id", async (req, res) => {
   }
 });
 
-
 app.delete("/products/:id", async (req, res) => {
   try {
     const data = await readProducts();
@@ -68,34 +74,6 @@ app.delete("/products/:id", async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get("/products/search", async (req, res) => {
   try {
     const data = await readProducts();
@@ -108,46 +86,7 @@ app.get("/products/search", async (req, res) => {
   } catch (error) {}
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+

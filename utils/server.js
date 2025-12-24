@@ -8,4 +8,5 @@ export async function readProducts() {
 
 export async function writeProducts(products) {
   await fs.writeFile('data_product/products.json', JSON.stringify(products, null, 2));
+
 }
