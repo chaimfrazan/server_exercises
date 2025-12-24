@@ -1,0 +1,14 @@
+[
+  {
+    "id": 2,
+    "title": "לסיים תרגיל",
+    "completed": false,
+    "priority": "medium"
+  },
+  {
+    "id": 3,
+    "title": "לאכול שווארמה",
+    "completed": true,
+    "priority": "high"
+  }
+]
